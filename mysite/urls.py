@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views
 from blog import views as bviews
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,3 +27,4 @@ urlpatterns = [
     url(r'', include('blog.urls')),
 
 ]
+
