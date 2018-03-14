@@ -1,10 +1,14 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">{% csrf_token %} Sign up</button>
-    </form>
+    <div class="mdl-card">
+      <div class="mdl-card--border">
+      <h2>Sign up</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% csrf_token %} Sign up</button>
+      </form>
+      </div>
+    </div>
 {% endblock %}

@@ -1,46 +1,125 @@
-{% load staticfiles %}
-<html>
-<head>
-  <title>My Fucking Site</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-</head>
-<body>
-  <div class="page-header">
-      {% if user.is_authenticated %}
-      <a href="{% url 'post_new' %}" class="top-menu">
-        <span class="glyphicon glyphicon-plus"></span>
-      </a>
-      <a href="{% url 'post_draft_list' %}" class="top-menu">
-        <span class="glyphicon glyphicon-edit"></span>
-      </a>
-      <p class="top-menu">Hello, {{ user.username }}
-        <small>
-          (<a href="{% url 'logout' %}">Log out</a>)
-        </small>
-      </p>
-    {% else %}
-        <input class="top-menu" type="text" name="search" placeholder="Search..">{% csrf_token %}
-        <button type="search" class="search btn btn-default">Save</button>
-      <a href="{% url 'login' %}" class="top-menu">
-        <span class="glyphicon glyphicon-lock"></span>
-      </a>
-      <a href="{% url 'signup' %}" class="top-menu">
-        <span class="glyphicon glyphicon-user"></span>
-      </a>
-    {% endif %}
-    <h1><a href="/">My Fucking Blog</a></h1>
-  </div>
+{% load staticfiles %} 
+{% load highlight_filter %}
 
+<html>
+
+<head>
+  <title>Some Ordinary Blog</title>
+  <link rel="stylesheet" href="{% static 'css/material.css' %}">
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="{% static 'js/material.js' %}"></script>
+  <!-- <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+  <script src="{% static 'js/node_modules/mark.js/src/mark.js' %}"></script>
+  <script src="{% static 'js/jquery-script.js' %}"></script> !-->
+</head>
+
+<body>
+  {% comment %}
+  <!-- OLD DESIGN -->
+  <div class="page-header">
+    {% if user.is_authenticated %}
+    <a href="{% url 'post_new' %}" class="top-menu">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
+    <a href="{% url 'post_draft_list' %}" class="top-menu">
+      <span class="glyphicon glyphicon-edit"></span>
+    </a>
+    <p class="top-menu">Hello, {{ user.username }}
+      <small>
+        (
+        <a href="{% url 'logout' %}">Log out</a>)
+      </small>
+    </p>
+    <form method="get" action="/search/" class="navbar-form pull-right">
+      <input type="text" class="input-medium search-query" name="q" placeholder="Type something...">
+      <input type="submit" class="btn" value="Search">
+    </form>
+    {% else %}
+    <a href="{% url 'login' %}" class="top-menu">
+      <span class="">Login</span>
+    </a>
+    <a href="{% url 'signup' %}" class="top-menu">
+      <span class="">Sign up</span>
+    </a>
+    <form method="get" action="/search/" class="navbar-form pull-right">
+      <input type="text" class="input-medium search-query" name="q" placeholder="Type something...">
+      <input type="submit" class="btn" value="Search">
+    </form>
+    {% endif %}
+    <h1>
+      <a href="/">My Fucking Blog</a>
+    </h1>
+  </div>
   <div class="content container">
     <div class="row">
       <div class="col-md-8">
-        {% block content %}
-        {% endblock %}
+        {% block content %} {% endblock %}
       </div>
     </div>
   </div>
+  {% endcomment %}
+  
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title"><a href="/" id="root-link">Some Ordinary Blog</a></span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable" id="search">
+              <form method="GET" action="/search/">
+                <label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
+                  <i class="material-icons">search</i>
+                </label>
+                <div class="mdl-textfield__expandable-holder">
+                  <input class="mdl-textfield__input" type="text" name="q" id="sample6">
+                  <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
+                </div>
+              </form>
+            </div>
+            {% if user.is_authenticated %}
+            <a class="mdl-navigation__link"  href="{% url 'post_new' %}" id="tt1"><i class="material-icons md-48">create</i></a>
+            <div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="tt1">
+                Create post
+            </div>
+            <a class="mdl-navigation__link" href="{% url 'post_draft_list' %}" id="tt2"><i class="material-icons md-48">drafts</i></a>
+            <div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="tt2">
+                Drafts
+            </div>
+            <a class="mdl-navigation__link" href="{% url 'logout' %}" id="tt3"><i class="material-icons">account_circle</i></a>
+            <div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="tt3">
+                Logout
+            </div>
+            Hello, {{ user.username }}
+            {% else %}         
+              <a class="mdl-navigation__link"  href="{% url 'login' %}" id="tt1"><i class="material-icons md-48">person</i></a>
+              <div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="tt1">
+                  Sign in
+              </div>
+              <a class="mdl-navigation__link" href="{% url 'signup' %}" id="tt2"><i class="material-icons md-48">person_add</i></a>
+              <div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="tt2">
+                  Sign up
+              </div>
+            {% endif %}
+        </nav>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="page-content container">
+        <div class="row">
+          <div class="col-md-8">
+            {% block content %} 
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
 </body>
+
 </html>

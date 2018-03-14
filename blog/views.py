@@ -3,9 +3,13 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
+from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
+from django import template 
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
+
+register = template.Library()
 
 # Create your views here.
 def post_list(request):
@@ -100,3 +104,10 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def search(request):
+    query = request.GET['q']
+    search_query = Post.objects.filter(Q(text__contains=query) | Q(title__contains=query)).order_by('created_date')
+    return render(request, 'blog/search.html', {'query': query, 'search_query': search_query })
+
+

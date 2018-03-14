@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% load highlight_filter %}
+
+{% block content %}
+<div>
+    You searched for: {{ query }} 
+</div>
+<div>
+    {% for post in search_query %}
+    <div class="post">
+      <p class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
+      <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title|highlight:query }}</a></h1>
+      <p>{{ post.text|highlight:query }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

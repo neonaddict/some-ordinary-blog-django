@@ -1,5 +1,5 @@
-.page-header {
-    background-color: #ff9400;
+/* .page-header {
+    background-color: #35629c;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
 }
@@ -14,8 +14,8 @@
     margin-left: 40px;
 }
 
-h1, h2, h3, h4 {
-    font-family: 'Lobster', cursive;
+body {
+    font-family: 'Roboto', sans-serif;
 }
 
 .date {
@@ -51,4 +51,57 @@ h1, h2, h3, h4 {
 
 .author {
   text-align: right;
+}
+*/
+
+.highlight{
+    background: orange;
+    color: black;
+}
+
+/*
+.mdl-layout__header {
+     background: url('../img/transparent.jpg') center / cover;
+} 
+*/
+
+
+.mdl-layout__header {
+    /* This background is dark, so we set text to white. Use 87% black instead if
+    your background is light. */
+    
+    color: white;
+    background: #26c6da;
+  }
+
+#menu {
+    padding-top: 12px;
+}
+
+#search {
+    margin-top: 20px;
+}
+
+#root-link {
+    text-decoration: none;
+    color: white;
+}
+
+.mdl-card {
+    margin: auto;
+    width: 700px;
+    margin-bottom: 20px;
+}
+.mdl-card__title {
+  height: 176px;
+  background: url('../img/neon.jpg') center / cover;
+}
+
+.mdl-card__title-text {
+    text-decoration: none;
+    color: white;      
+}
+
+.mdl-card__menu {
+  color: #fff;
 }
