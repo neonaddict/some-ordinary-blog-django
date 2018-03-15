@@ -2,13 +2,19 @@
 {% load highlight_filter %}
 
 {% block content %}
-<div>
-    You searched for: {{ query }} 
+<div class="mdl-card">
+    <h2>You searched for: {{ query }}</h2> 
 </div>
 <div>
     {% for post in search_query %}
-    <div class="post">
-      <p class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
+    <div class="post mdl-card">
+        <div class="mdl-card__menu">
+                <span class="mdl-chip">
+                    <span class="mdl-chip__text">
+                    <p class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
+                    </span>
+                </span>
+        </div>
       <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title|highlight:query }}</a></h1>
       <p>{{ post.text|highlight:query }}</p>
     </div>
