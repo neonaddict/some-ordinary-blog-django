@@ -7,5 +7,5 @@ But with extensions maded:
 * Added signup form and view
 * Changes template, using MDL library
 * Added search form, view and result highlighting
- * Added highlight filter
-* Deployed on Heroku
+  * Added highlight filter
+* Deployed on Heroku(https://someordinaryblogdjango.herokuapp.com)
